@@ -33,6 +33,7 @@ def gitmodules(bot, trigger):
     except:
         bot.say("No repository is configured in the settings")
     else:
+        print(repository, path)
         if not os.path.exists(path):
             # clone repository
             failed = subprocess.check_call(['git', 'clone', repository, path])
@@ -40,9 +41,5 @@ def gitmodules(bot, trigger):
                 bot.say("ERROR: repository not cloned")
             else:
                 bot.say("Cloned repository")
-
-        failed = subprocess.check_call(['cd', path, '&&', 'git', 'pull'])
-        if failed:
-            bot.say("ERROR: nothing pulled")
-        else:
-            bot.say("Pulled changes")
+        res = subprocess.output([ 'git','--work-tree', path,'--git-dir',path+'/.git', 'pull'])
+        bot.say(res)
