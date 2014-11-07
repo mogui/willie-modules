@@ -41,5 +41,5 @@ def gitmodules(bot, trigger):
                 bot.say("ERROR: repository not cloned")
             else:
                 bot.say("Cloned repository")
-        res = subprocess.output([ 'git','--work-tree', path,'--git-dir',path+'/.git', 'pull'])
+        res = subprocess.check_output([ 'git','--work-tree', path,'--git-dir',path+'/.git', 'pull'])
         bot.say(res)
